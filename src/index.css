@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --bg:#000;
+  --card:#111319;
+  --muted:#9aa4b2;
+  --green:#22c55e;
+  --purple:#8b5cf6;
+}
+
+html, body, #root{height:100%}
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--bg);
+  color: #fff;
+}
+
+/* Inputs readable on dark bg */
+input, select, textarea {
+  background:#0b0d12;
+  color:#fff;
+  border:1px solid #2b2f3a;
+  border-radius:10px;
+  padding:10px 12px;
+  outline:none;
+}
+input::placeholder, textarea::placeholder { color:#8993a5; }
+
+/* Reusable */
+.card { background:var(--card); border:1px solid #1d2230; border-radius:18px; padding:16px; }
+.btn { padding:10px 14px; border-radius:12px; font-weight:600; }
+.btn-green { background:var(--green); color:#000; }
+.btn-green:hover { filter:brightness(1.1) }
+.btn-purple { background:var(--purple); color:#fff; }
+.btn-purple:hover { filter:brightness(1.1) }
+
+.badge-verified { background:var(--green); color:#001504; font-size:.75rem; padding:2px 8px; border-radius:999px; }
+
+.grid-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:18px; }
+
+/* Tiny utility */
+.text-muted { color:var(--muted); }
+.hr { height:1px; background:#1d2230; border:0; margin:12px 0; }
+
+/* Make star icons sit nicely */
+.stars { display:flex; align-items:center; gap:6px; color:#facc15; }
