@@ -1,84 +1,117 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 export default function LandingPage() {
   return (
-    <div className="p-6 text-white">
-      <h1 className="text-4xl font-extrabold mb-6 text-green-400">
+    <div className="max-w-6xl mx-auto p-6">
+      <h1 className="text-3xl font-bold text-green-400 mb-4">
         Welcome to NextSetLive
       </h1>
-      <p className="mb-8 max-w-2xl text-gray-300">
-        NextSetLive connects bands and venues with verified ticket sales, real
-        reviews, and credibility scores. Bands showcase their draw, venues find
-        reliable talent — everyone wins.
+      <p className="text-gray-300 mb-8">
+        Book smarter. Verify sales. Build trust. NextSetLive gives bands and
+        venues a credibility layer, real ticket metrics, and tools for
+        last-minute fills.
       </p>
 
       <div className="grid md:grid-cols-2 gap-8">
-        {/* Band Signup */}
-        <div className="bg-gray-900 rounded-xl shadow-md p-6">
-          <h2 className="text-2xl font-bold mb-4 text-purple-400">🎸 Bands</h2>
-          <p className="mb-4 text-gray-300">
-            Claim your profile, add socials, manage shows, and grow your score.
+        {/* Band Waitlist */}
+        <div className="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-green-400">
+          <h2 className="text-2xl font-semibold text-green-400 mb-2">
+            🎸 Bands — Join the Waitlist
+          </h2>
+          <p className="mb-4 text-gray-400">
+            Claim your profile, link socials, and start building credibility.
           </p>
-          <form className="grid gap-4">
+          <form className="space-y-3">
             <input
-              type="text"
+              className="w-full bg-black text-white px-3 py-2 rounded-md border border-gray-700"
               placeholder="Band Name"
-              className="p-2 rounded bg-black border border-gray-700 text-white"
             />
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                className="bg-black text-white px-3 py-2 rounded-md border border-gray-700"
+                placeholder="City"
+              />
+              <input
+                className="bg-black text-white px-3 py-2 rounded-md border border-gray-700"
+                placeholder="State"
+              />
+            </div>
             <input
-              type="email"
+              className="w-full bg-black text-white px-3 py-2 rounded-md border border-gray-700"
               placeholder="Contact Email"
-              className="p-2 rounded bg-black border border-gray-700 text-white"
             />
             <input
-              type="text"
-              placeholder="Spotify / Instagram link"
-              className="p-2 rounded bg-black border border-gray-700 text-white"
+              className="w-full bg-black text-white px-3 py-2 rounded-md border border-gray-700"
+              placeholder="Instagram URL"
             />
-            <button className="px-4 py-2 rounded bg-green-500 text-black font-bold hover:bg-green-400">
-              Join Waitlist
+            <input
+              className="w-full bg-black text-white px-3 py-2 rounded-md border border-gray-700"
+              placeholder="Spotify URL"
+            />
+            <input
+              className="w-full bg-black text-white px-3 py-2 rounded-md border border-gray-700"
+              placeholder="Website (optional)"
+            />
+            <input
+              className="w-full bg-black text-white px-3 py-2 rounded-md border border-gray-700"
+              placeholder="Typical Draw (avg tickets)"
+            />
+            <button
+              type="submit"
+              className="w-full px-4 py-2 rounded-lg font-bold bg-green-500 text-black hover:bg-green-600"
+            >
+              Join as Band
             </button>
           </form>
         </div>
 
-        {/* Venue Signup */}
-        <div className="bg-gray-900 rounded-xl shadow-md p-6">
-          <h2 className="text-2xl font-bold mb-4 text-purple-400">🏟️ Venues</h2>
-          <p className="mb-4 text-gray-300">
-            Manage your profile, upcoming shows, verified ticket sales, and
-            reviews.
+        {/* Venue Waitlist */}
+        <div className="bg-gray-900 rounded-2xl p-6 border border-gray-800 hover:border-purple-400">
+          <h2 className="text-2xl font-semibold text-purple-400 mb-2">
+            🏟️ Venues — Join the Waitlist
+          </h2>
+          <p className="mb-4 text-gray-400">
+            Verify online sales, manage door adds, and discover fill-ins fast.
           </p>
-          <form className="grid gap-4">
+          <form className="space-y-3">
             <input
-              type="text"
+              className="w-full bg-black text-white px-3 py-2 rounded-md border border-gray-700"
               placeholder="Venue Name"
-              className="p-2 rounded bg-black border border-gray-700 text-white"
+            />
+            <div className="grid grid-cols-2 gap-3">
+              <input
+                className="bg-black text-white px-3 py-2 rounded-md border border-gray-700"
+                placeholder="City"
+              />
+              <input
+                className="bg-black text-white px-3 py-2 rounded-md border border-gray-700"
+                placeholder="State"
+              />
+            </div>
+            <input
+              className="w-full bg-black text-white px-3 py-2 rounded-md border border-gray-700"
+              placeholder="Venue Capacity"
             />
             <input
-              type="number"
-              placeholder="Capacity"
-              className="p-2 rounded bg-black border border-gray-700 text-white"
-            />
-            <input
-              type="email"
+              className="w-full bg-black text-white px-3 py-2 rounded-md border border-gray-700"
               placeholder="Booking Email"
-              className="p-2 rounded bg-black border border-gray-700 text-white"
             />
-            <button className="px-4 py-2 rounded bg-green-500 text-black font-bold hover:bg-green-400">
-              Join Waitlist
+            <input
+              className="w-full bg-black text-white px-3 py-2 rounded-md border border-gray-700"
+              placeholder="Website"
+            />
+            <input
+              className="w-full bg-black text-white px-3 py-2 rounded-md border border-gray-700"
+              placeholder="Instagram URL"
+            />
+            <button
+              type="submit"
+              className="w-full px-4 py-2 rounded-lg font-bold bg-purple-500 text-black hover:bg-purple-600"
+            >
+              Join as Venue
             </button>
           </form>
         </div>
-      </div>
-
-      <div className="mt-12">
-        <Link
-          to="/venues"
-          className="px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-bold"
-        >
-          Explore Venues
-        </Link>
       </div>
     </div>
   );

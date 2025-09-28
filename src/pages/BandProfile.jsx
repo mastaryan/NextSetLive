@@ -1,78 +1,60 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import bands from "../data/bands";
 import shows from "../data/shows";
+import venues from "../data/venues";
 import { FaSpotify, FaInstagram, FaFacebook, FaTwitter, FaGlobe } from "react-icons/fa";
 
 export default function BandProfile() {
   const { bandId } = useParams();
+  const navigate = useNavigate();
   const band = bands.find((b) => b.id === bandId);
 
-  if (!band) {
-    return <p className="p-6 text-red-400">Band not found.</p>;
-  }
+  if (!band) return <p className="p-6 text-red-400">Band not found.</p>;
 
   const upcoming = shows.filter((s) => s.bandId === band.id && !s.past);
   const past = shows.filter((s) => s.bandId === band.id && s.past);
+  const soldOut = past.find((p) => p.soldOut);
+  const soldOutVenue = soldOut ? venues.find(v => v.id === soldOut.venueId) : null;
 
   return (
-    <div className="p-6">
-      {/* Band Header */}
-      <h1 className="text-3xl font-bold text-green-400 mb-2 flex items-center gap-2">
-        {band.name}
-        {band.verified && (
-          <span className="text-green-400 text-sm font-bold">✅ Verified</span>
-        )}
-      </h1>
-      <p className="text-gray-400">{band.genre || "Genre TBD"}</p>
-
-      {/* Socials */}
-      <div className="flex gap-4 mt-3 text-xl">
-        {band.spotify && (
-          <a href={band.spotify} target="_blank" rel="noreferrer">
-            <FaSpotify className="text-green-500 hover:text-green-300" />
-          </a>
-        )}
-        {band.instagram && (
-          <a href={band.instagram} target="_blank" rel="noreferrer">
-            <FaInstagram className="text-pink-500 hover:text-pink-300" />
-          </a>
-        )}
-        {band.facebook && (
-          <a href={band.facebook} target="_blank" rel="noreferrer">
-            <FaFacebook className="text-blue-500 hover:text-blue-300" />
-          </a>
-        )}
-        {band.twitter && (
-          <a href={band.twitter} target="_blank" rel="noreferrer">
-            <FaTwitter className="text-blue-400 hover:text-blue-200" />
-          </a>
-        )}
-        {band.website && (
-          <a href={band.website} target="_blank" rel="noreferrer">
-            <FaGlobe className="text-purple-400 hover:text-purple-200" />
-          </a>
-        )}
+    <div className="p-6 max-w-4xl mx-auto">
+      <div className="flex items-start gap-4">
+        {band.image && <img src={band.image} alt={band.name} className="w-20 h-20 rounded-xl object-cover" />}
+        <div>
+          <h1 className="text-3xl font-extrabold text-green-400 flex items-center gap-2">
+            {band.name}
+            {band.verified && (
+              <span className="text-xs bg-green-400 text-black px-2 py-0.5 rounded-full">
+                ✔ Verified
+              </span>
+            )}
+          </h1>
+          <p className="text-gray-400">{band.genre}</p>
+          <div className="flex gap-4 mt-2 text-xl">
+            {band.spotify && <a href={band.spotify} target="_blank" rel="noreferrer" className="hover:text-green-400"><FaSpotify /></a>}
+            {band.instagram && <a href={band.instagram} target="_blank" rel="noreferrer" className="hover:text-green-400"><FaInstagram /></a>}
+            {band.facebook && <a href={band.facebook} target="_blank" rel="noreferrer" className="hover:text-green-400"><FaFacebook /></a>}
+            {band.twitter && <a href={band.twitter} target="_blank" rel="noreferrer" className="hover:text-green-400"><FaTwitter /></a>}
+            {band.website && <a href={band.website} target="_blank" rel="noreferrer" className="hover:text-green-400"><FaGlobe /></a>}
+          </div>
+          {soldOutVenue && (
+            <div className="mt-3 text-sm bg-purple-600/30 border border-purple-600 px-2 py-1 rounded">
+              ✅ Sold out {soldOutVenue.name} ({soldOutVenue.capacity} cap)
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Reviews */}
-      {band.reviews && band.reviews.length > 0 && (
+      {band.reviews?.length > 0 && (
         <div className="mt-6">
           <h2 className="text-xl font-semibold text-purple-400 mb-2">Reviews</h2>
-          <ul className="space-y-3">
-            {band.reviews.map((review, idx) => (
-              <li
-                key={idx}
-                className="border border-gray-700 rounded p-3 bg-gray-800"
-              >
-                <p className="font-semibold text-green-300">{review.source}</p>
-                <p className="text-gray-400">{review.text}</p>
-                <p className="text-yellow-400">
-                  {"★".repeat(review.stars)}{" "}
-                  <span className="text-gray-500">
-                    {"★".repeat(5 - review.stars)}
-                  </span>
-                </p>
+          <ul className="space-y-2">
+            {band.reviews.map((r, i) => (
+              <li key={i} className="border border-gray-700 rounded p-3 bg-gray-900">
+                <p className="text-gray-300">{r.text}</p>
+                <p className="text-sm text-gray-500 mt-1">— {r.source}</p>
               </li>
             ))}
           </ul>
@@ -82,54 +64,27 @@ export default function BandProfile() {
       {/* Upcoming Shows */}
       <div className="mt-6">
         <h2 className="text-xl font-semibold text-purple-400 mb-3">Upcoming Shows</h2>
-        {upcoming.length > 0 ? (
+        {upcoming.length ? (
           <ul className="space-y-2">
-            {upcoming.map((show) => (
-              <li
-                key={show.id}
-                className="border border-gray-700 rounded p-3 bg-gray-800"
-              >
-                <p className="text-green-300 font-semibold">{show.title}</p>
-                <p className="text-gray-400">
-                  {new Date(show.date).toLocaleString()}
-                </p>
-              </li>
-            ))}
+            {upcoming.map(show => {
+              const v = venues.find(v => v.id === show.venueId);
+              return (
+                <li key={show.id} className="border border-gray-700 rounded p-3 bg-gray-900 flex justify-between items-center">
+                  <div>
+                    <p className="text-green-300 font-semibold">{show.title}</p>
+                    <p className="text-gray-400">{new Date(show.date).toLocaleString()} @ <Link to={`/venue/${v?.id}`} className="underline hover:text-green-400">{v?.name}</Link></p>
+                  </div>
+                  <button
+                    onClick={() => navigate(`/ticket/checkout?showId=${show.id}`)}
+                    className="px-3 py-1.5 rounded bg-green-500 text-black font-bold hover:bg-green-400"
+                  >
+                    Buy Tickets
+                  </button>
+                </li>
+              );
+            })}
           </ul>
-        ) : (
-          <p className="text-gray-500">No upcoming shows listed.</p>
-        )}
-      </div>
-
-      {/* Past Shows */}
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold text-purple-400 mb-3">Past Shows</h2>
-        {past.length > 0 ? (
-          <ul className="space-y-2">
-            {past.slice(-3).map((show) => (
-              <li
-                key={show.id}
-                className="border border-gray-700 rounded p-3 bg-gray-800"
-              >
-                <p className="text-green-300 font-semibold">{show.title}</p>
-                <p className="text-gray-400">
-                  {new Date(show.date).toLocaleDateString()}
-                </p>
-                <p className="text-gray-500">
-                  Tickets Sold: {show.ticketsSold} / {show.capacity}
-                </p>
-                <p className="text-yellow-400">
-                  {"★".repeat(show.rating || 0)}{" "}
-                  <span className="text-gray-500">
-                    {"★".repeat(5 - (show.rating || 0))}
-                  </span>
-                </p>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-500">No past shows yet.</p>
-        )}
+        ) : <p className="text-gray-500">No upcoming shows.</p>}
       </div>
     </div>
   );
