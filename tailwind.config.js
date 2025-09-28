@@ -2,18 +2,17 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,jsx,ts,tsx}"
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        // accents used in the UI
         brand: {
-          green: "#22c55e",  // green-500
-          purple: "#a855f7", // purple-500
-        }
-      }
-    }
+          green: "#22c55e",
+          purple: "#a855f7",
+        },
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 };
