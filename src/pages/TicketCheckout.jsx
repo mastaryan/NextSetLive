@@ -1,50 +1,48 @@
-import React from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { shows } from "../data/shows";
-import { bands } from "../data/bands";
-import { venues } from "../data/venues";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function TicketCheckout() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const showId = searchParams.get("showId");
+  const [quantity, setQuantity] = useState(1);
+  const [card, setCard] = useState("");
 
-  const show = shows.find((s) => s.id === showId);
-  const band = bands.find((b) => b.id === show?.bandId);
-  const venue = venues.find((v) => v.id === show?.venueId);
-
-  const handlePurchase = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    navigate(
-      `/ticket/confirm?showId=${showId}`
-    );
+    if (card.length === 16) {
+      navigate("/ticket/confirm", { state: { quantity } });
+    } else {
+      alert("Please enter a valid 16-digit card number (use 4444... for demo).");
+    }
   };
 
-  if (!show) return <div className="p-6 text-white">Show not found</div>;
-
   return (
-    <div className="p-6 text-white max-w-md mx-auto">
+    <div className="p-6 max-w-md mx-auto bg-gray-900 border border-gray-700 rounded-lg">
       <h1 className="text-2xl font-bold text-green-400 mb-4">Checkout</h1>
-      <p className="mb-2 font-semibold">{band?.name}</p>
-      <p className="mb-2">{venue?.name} — {venue?.city}, {venue?.state}</p>
-      <p className="mb-4">{new Date(show.date).toLocaleString()}</p>
-
-      <form onSubmit={handlePurchase} className="space-y-3">
-        <input
-          className="w-full p-2 rounded bg-gray-800"
-          placeholder="Name on Card"
-        />
-        <input
-          className="w-full p-2 rounded bg-gray-800"
-          placeholder="Card Number (use 4444...)"
-        />
-        <div className="flex gap-2">
-          <input className="w-1/2 p-2 rounded bg-gray-800" placeholder="MM/YY" />
-          <input className="w-1/2 p-2 rounded bg-gray-800" placeholder="CVC" />
-        </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <label className="block">
+          <span className="text-gray-300">Tickets (max 4)</span>
+          <input
+            type="number"
+            min="1"
+            max="4"
+            value={quantity}
+            onChange={(e) => setQuantity(parseInt(e.target.value))}
+            className="w-full p-2 mt-1 bg-gray-800 border border-gray-600 rounded text-white"
+          />
+        </label>
+        <label className="block">
+          <span className="text-gray-300">Credit Card Number</span>
+          <input
+            type="text"
+            value={card}
+            onChange={(e) => setCard(e.target.value)}
+            placeholder="4444 4444 4444 4444"
+            className="w-full p-2 mt-1 bg-gray-800 border border-gray-600 rounded text-white"
+          />
+        </label>
         <button
           type="submit"
-          className="w-full p-2 bg-green-500 text-black rounded hover:bg-green-400"
+          className="w-full py-2 bg-green-500 text-black font-bold rounded hover:bg-green-400"
         >
           Purchase
         </button>

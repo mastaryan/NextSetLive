@@ -1,96 +1,86 @@
-// src/pages/VenueProfile.jsx
 import React from "react";
 import { useParams } from "react-router-dom";
-import { venues } from "../data/venues";
-import { bands } from "../data/bands";
-import { shows } from "../data/shows";
+import venues from "../data/venues";
+import shows from "../data/shows";
+import bands from "../data/bands";
 
 export default function VenueProfile() {
   const { venueId } = useParams();
   const venue = venues.find((v) => v.id === venueId);
 
-  if (!venue) return <div className="p-6 text-white">Venue not found</div>;
+  if (!venue) {
+    return <p className="p-6 text-red-400">Venue not found.</p>;
+  }
 
-  // Shows for this venue
-  const venueShows = shows.filter((s) => s.venueId === venueId);
-
-  const upcomingShows = venueShows.filter(
-    (s) => new Date(s.date) >= new Date()
-  );
-  const pastShows = venueShows
-    .filter((s) => new Date(s.date) < new Date())
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, 3);
+  const upcoming = shows.filter((s) => s.venueId === venue.id);
+  const past = shows.filter((s) => s.venueId === venue.id && s.past);
 
   return (
-    <div className="p-6 text-white">
-      {/* Venue Header */}
-      <div className="bg-gray-900 p-6 rounded-lg mb-6">
-        <h1 className="text-3xl font-bold text-green-400">{venue.name}</h1>
-        <p className="text-gray-400">
-          {venue.city}, {venue.state}
+    <div className="p-6">
+      <h1 className="text-3xl font-bold text-green-400 mb-2 flex items-center gap-2">
+        {venue.name}
+        {venue.verified && (
+          <span className="text-green-400 text-sm font-bold">✅ Verified</span>
+        )}
+      </h1>
+      <p className="text-gray-400">{venue.city}, {venue.state}</p>
+      <p className="text-sm text-gray-500">Capacity: {venue.capacity}</p>
+      <p className="text-sm text-gray-500">Booking: {venue.bookingEmail}</p>
+      {venue.facebook && (
+        <p className="text-sm text-blue-400">
+          <a href={venue.facebook} target="_blank" rel="noreferrer">
+            Facebook Page
+          </a>
         </p>
-        <p className="mt-2">Capacity: {venue.capacity}</p>
-        <p>Email: {venue.email || "n/a"}</p>
-        <p>Facebook: {venue.facebook || "n/a"}</p>
+      )}
+
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold text-purple-400 mb-3">Upcoming Shows</h2>
+        {upcoming.length > 0 ? (
+          <ul className="space-y-2">
+            {upcoming.map((show) => {
+              const band = bands.find((b) => b.id === show.bandId);
+              return (
+                <li key={show.id} className="border border-gray-700 rounded p-3 bg-gray-800">
+                  <p className="text-green-300 font-semibold">
+                    {band ? band.name : "Unknown Band"}
+                  </p>
+                  <p className="text-gray-400">{new Date(show.date).toLocaleString()}</p>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p className="text-gray-500">No upcoming shows listed.</p>
+        )}
       </div>
 
-      {/* Upcoming Shows */}
-      <h2 className="text-xl font-bold mb-3">Upcoming Shows</h2>
-      {upcomingShows.length > 0 ? (
-        upcomingShows.map((show) => {
-          const band = bands.find((b) => b.id === show.bandId);
-          return (
-            <div
-              key={show.id}
-              className="bg-gray-800 p-4 rounded mb-3 flex justify-between items-center"
-            >
-              <div>
-                <p className="font-semibold">
-                  {band ? band.name : "Unknown Band"}
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold text-purple-400 mb-3">Past Shows</h2>
+        {past.length > 0 ? (
+          <ul className="space-y-2">
+            {past.slice(-3).map((show) => (
+              <li key={show.id} className="border border-gray-700 rounded p-3 bg-gray-800">
+                <p className="text-green-300 font-semibold">{show.title}</p>
+                <p className="text-gray-400">
+                  {new Date(show.date).toLocaleDateString()}
                 </p>
-                <p className="text-sm text-gray-400">
-                  {new Date(show.date).toLocaleString()}
+                <p className="text-gray-500">
+                  Tickets Sold: {show.ticketsSold} / {show.capacity}
                 </p>
-              </div>
-              <button className="px-4 py-2 bg-green-500 text-black rounded hover:bg-green-400">
-                Buy Tickets
-              </button>
-            </div>
-          );
-        })
-      ) : (
-        <p className="text-gray-400">No upcoming shows.</p>
-      )}
-
-      {/* Past Shows */}
-      <h2 className="text-xl font-bold mt-6 mb-3">Past Shows</h2>
-      {pastShows.length > 0 ? (
-        pastShows.map((show) => {
-          const band = bands.find((b) => b.id === show.bandId);
-          return (
-            <div
-              key={show.id}
-              className="bg-gray-800 p-4 rounded mb-3 flex flex-col"
-            >
-              <p className="font-semibold">
-                {band ? band.name : "Unknown Band"}
-              </p>
-              <p className="text-sm text-gray-400">
-                {new Date(show.date).toLocaleString()}
-              </p>
-              <div className="mt-2 text-sm text-gray-300">
-                <p>🎟 Tickets Sold: {show.stats?.ticketsSold || "N/A"}</p>
-                <p>✅ Verified Scans: {show.stats?.verified || "N/A"}</p>
-                <p>⭐ Rating: {show.stats?.rating || "Not rated"}</p>
-                <p>👀 Views: {show.stats?.views || 0}</p>
-              </div>
-            </div>
-          );
-        })
-      ) : (
-        <p className="text-gray-400">No past shows logged.</p>
-      )}
+                <p className="text-yellow-400">
+                  {"★".repeat(show.rating || 0)}{" "}
+                  <span className="text-gray-500">
+                    {"★".repeat(5 - (show.rating || 0))}
+                  </span>
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500">No past shows yet.</p>
+        )}
+      </div>
     </div>
   );
 }

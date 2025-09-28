@@ -1,14 +1,20 @@
 import React from "react";
-import { FaStar } from "react-icons/fa";
 
-export default function Stars({ value=0, size=14 }) {
-  const n = Math.round(value);
+export default function Stars({ rating }) {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5;
+  const empty = 5 - full - (half ? 1 : 0);
+
   return (
-    <div className="stars">
-      {Array.from({length:5}).map((_,i)=>(
-        <FaStar key={i} size={size} className={i<n ? "" : "opacity-30"} />
+    <div className="flex items-center space-x-1">
+      {[...Array(full)].map((_, i) => (
+        <span key={`full-${i}`} className="text-yellow-400 text-lg">★</span>
       ))}
-      <span className="text-muted text-sm ml-1">{value.toFixed(1)} / 5</span>
+      {half && <span className="text-yellow-400 text-lg">☆</span>}
+      {[...Array(empty)].map((_, i) => (
+        <span key={`empty-${i}`} className="text-gray-600 text-lg">★</span>
+      ))}
+      <span className="ml-2 text-sm text-gray-400">{rating.toFixed(1)}/5</span>
     </div>
   );
 }

@@ -1,45 +1,60 @@
-// src/data/bands.js
-
-export const bands = [
+const bands = [
   {
     id: "frankie",
-    name: "Frankie & The Witch Fingers",
+    name: "Frankie & the Witch Fingers",
+    genre: "Psych Rock / Garage Rock",
     verified: true,
+    spotify: "https://open.spotify.com/artist/1q5jJv8fUFl7L9jL7lI4qw",
+    instagram: "https://www.instagram.com/frankieandthewitchfingers",
+    facebook: "https://www.facebook.com/frankieandthewitchfingers",
+    twitter: "https://twitter.com/frankiewitch",
+    website: "https://www.frankieandthewitchfingers.com",
+    reviews: [
+      {
+        source: "Troubadour (Los Angeles, CA)",
+        text: "Completely sold out! High-energy, unforgettable night.",
+        stars: 5,
+      },
+    ],
     rating: 5,
-    socials: {
-      instagram: "https://instagram.com/frankieandthewitchfingers",
-      facebook: "https://facebook.com/frankieandthewitchfingers",
-      spotify: "https://open.spotify.com/artist/2a3OH5wOb7WCLXq5TFA2OQ",
-      x: "https://x.com/fatwf",
-      website: "https://frankieandthewitchfingers.com",
-    },
-    image:
-      "https://images.squarespace-cdn.com/content/v1/67c9f34a13a90d1812988a7b/1741663423285-SB37B2MTEWUZL13W8WRM/HORIZONTAL+-+FATWF+PRESS+SHOT+2+-+Credit_+%40deathbyjames.jpg",
   },
   {
     id: "demoband",
     name: "Demo Band",
+    genre: "Indie Rock",
     verified: true,
-    rating: 3.5,
-    socials: {
-      instagram: "#",
-      facebook: "#",
-      spotify: "#",
-      website: "#",
-    },
-    image: "/assets/demoband.jpg",
+    spotify: "https://open.spotify.com",
+    instagram: "https://www.instagram.com",
+    facebook: "https://www.facebook.com",
+    twitter: "https://twitter.com",
+    website: "https://example.com",
+    reviews: [
+      {
+        source: "Zanzabar (Louisville, KY)",
+        text: "Tight performance and great crowd draw.",
+        stars: 4,
+      },
+      {
+        source: "Cosmic Charlie’s (Lexington, KY)",
+        text: "Solid show, but energy dipped mid-set.",
+        stars: 3,
+      },
+    ],
+    rating: 4,
   },
   {
     id: "neonpines",
     name: "Neon Pines",
+    genre: "Alt Folk",
     verified: false,
-    rating: 2.5,
-    socials: {
-      instagram: "#",
-      facebook: "#",
-      spotify: "#",
-      website: "#",
-    },
-    image: "/assets/neonpines.jpg",
+    spotify: "",
+    instagram: "",
+    facebook: "",
+    twitter: "",
+    website: "",
+    reviews: [],
+    rating: 0,
   },
 ];
+
+export default bands;

@@ -1,22 +1,123 @@
-// ISO strings so we don't need dayjs at build time.
+import dayjs from "dayjs";
+
 const shows = [
-  // Frankie — Sept–Nov
-  { id:"fatwf1", bandId:"frankie", venueId:"terminal-west", venueName:"Terminal West", city:"Atlanta", state:"GA", date:"2025-09-24T20:00:00", ticketsSold:950, verified:900, views:5000 },
-  { id:"fatwf2", bandId:"frankie", venueId:"palmer",        venueName:"Palmer Events Center", city:"Austin", state:"TX", date:"2025-09-26T20:00:00", ticketsSold:1150, verified:1100, views:6200 },
-  { id:"fatwf3", bandId:"frankie", venueId:"tulips",        venueName:"Tulips", city:"Fort Worth", state:"TX", date:"2025-09-29T20:00:00", ticketsSold:500, verified:480, views:3200 },
-  { id:"fatwf4", bandId:"frankie", venueId:"turf-club",     venueName:"Turf Club", city:"St. Paul", state:"MN", date:"2025-10-02T20:00:00", ticketsSold:390, verified:370, views:2900 },
-  { id:"fatwf5", bandId:"frankie", venueId:"xray",          venueName:"X-Ray Arcade", city:"Cudahy", state:"WI", date:"2025-10-03T20:00:00", ticketsSold:490, verified:470, views:2800 },
-  { id:"fatwf6", bandId:"frankie", venueId:"thirdman",      venueName:"Third Man Records", city:"Detroit", state:"MI", date:"2025-10-10T20:00:00", ticketsSold:780, verified:750, views:3500 },
-  { id:"fatwf7", bandId:"frankie", venueId:"glass-house",   venueName:"The Glass House", city:"Pomona", state:"CA", date:"2025-11-05T20:00:00", ticketsSold:1100, verified:1080, views:8000 },
+  // 🎸 Frankie shows (realistic 2025 tour dates)
+  {
+    id: "f1",
+    bandId: "frankie",
+    venueId: "masquerade_atlanta",
+    title: "Frankie & The Witch Fingers — The Masquerade",
+    date: dayjs("2025-09-27T20:00:00").toISOString(),
+    capacity: 1000,
+    ticketLink: "/ticket/checkout",
+    purchaseVia: "internal",
+  },
+  {
+    id: "f2",
+    bandId: "frankie",
+    venueId: "turf_club_stpaul",
+    title: "Frankie & The Witch Fingers — Turf Club",
+    date: dayjs("2025-10-02T20:00:00").toISOString(),
+    capacity: 400,
+    ticketLink: "https://turfclub.net/tickets",
+    purchaseVia: "external",
+  },
+  {
+    id: "f3",
+    bandId: "frankie",
+    venueId: "grog_shop_cleveland",
+    title: "Frankie & The Witch Fingers — Grog Shop",
+    date: dayjs("2025-10-04T20:30:00").toISOString(),
+    capacity: 450,
+    ticketLink: "https://thegrogshop.com/tickets",
+    purchaseVia: "external",
+  },
+  {
+    id: "f4",
+    bandId: "frankie",
+    venueId: "lees_palace_toronto",
+    title: "Frankie & The Witch Fingers — Lee’s Palace",
+    date: dayjs("2025-10-07T19:00:00").toISOString(),
+    capacity: 700,
+    ticketLink: "https://leespalace.com/tickets",
+    purchaseVia: "external",
+  },
+  {
+    id: "f5",
+    bandId: "frankie",
+    venueId: "brighton_music_hall_boston",
+    title: "Frankie & The Witch Fingers — Brighton Music Hall",
+    date: dayjs("2025-10-10T19:30:00").toISOString(),
+    capacity: 800,
+    ticketLink: "https://brightonmusichall.com/tickets",
+    purchaseVia: "external",
+  },
+  {
+    id: "f6",
+    bandId: "frankie",
+    venueId: "glass_house_pomona",
+    title: "Frankie & The Witch Fingers — The Glass House",
+    date: dayjs("2025-10-30T20:00:00").toISOString(),
+    capacity: 1200,
+    ticketLink: "https://theglasshouse.us/tickets",
+    purchaseVia: "external",
+  },
 
-  // Demo Band — mix of prior + upcoming
-  { id:"demo1", bandId:"demo", venueId:"zanzabar",         venueName:"Zanzabar", city:"Louisville", state:"KY", date:"2025-10-05T21:00:00", ticketsSold:300, verified:290, views:1800 },
-  { id:"demo2", bandId:"demo", venueId:"cosmic-charlies",  venueName:"Cosmic Charlie’s", city:"Lexington", state:"KY", date:"2025-09-10T21:00:00", ticketsSold:250, verified:240, views:1500 }, // prior
-  { id:"demo3", bandId:"demo", venueId:"turf-club",        venueName:"Turf Club", city:"St. Paul", state:"MN", date:"2025-08-20T21:00:00", ticketsSold:200, verified:190, views:1400 },       // prior
-  { id:"demo4", bandId:"demo", venueId:"brighton",         venueName:"Brighton Music Hall", city:"Boston", state:"MA", date:"2025-07-15T21:00:00", ticketsSold:180, verified:170, views:1200 }, // prior
+  // 🎶 DemoBand — past & upcoming KY shows
+  {
+    id: "d1",
+    bandId: "demoband",
+    venueId: "zanzabar_louisville",
+    title: "Demo Band — Zanzabar",
+    date: dayjs("2025-09-10T20:00:00").toISOString(),
+    past: true,
+    capacity: 400,
+    ticketsSold: 320,
+    rating: 4,
+  },
+  {
+    id: "d2",
+    bandId: "demoband",
+    venueId: "cosmic_charlies_lexington",
+    title: "Demo Band — Cosmic Charlie’s",
+    date: dayjs("2025-09-15T20:00:00").toISOString(),
+    past: true,
+    capacity: 350,
+    ticketsSold: 200,
+    rating: 3,
+  },
+  {
+    id: "d3",
+    bandId: "demoband",
+    venueId: "headliners_louisville",
+    title: "Demo Band — Headliners Music Hall",
+    date: dayjs("2025-10-12T20:00:00").toISOString(),
+    capacity: 700,
+    ticketLink: "/ticket/checkout",
+    purchaseVia: "internal",
+  },
+  {
+    id: "d4",
+    bandId: "demoband",
+    venueId: "the_burl_lexington",
+    title: "Demo Band — The Burl",
+    date: dayjs("2025-10-20T20:00:00").toISOString(),
+    capacity: 300,
+    ticketLink: "/ticket/checkout",
+    purchaseVia: "internal",
+  },
 
-  // Neon Pines — new, mostly upcoming
-  { id:"neon1", bandId:"neon", venueId:"grog",             venueName:"Grog Shop", city:"Cleveland", state:"OH", date:"2025-10-20T20:00:00", ticketsSold:200, verified:180, views:1000 }
+  // 🌲 Neon Pines — no past shows, only upcoming
+  {
+    id: "n1",
+    bandId: "neonpines",
+    venueId: "pinewood_bar_knoxville",
+    title: "Neon Pines — Pinewood Bar",
+    date: dayjs("2025-10-25T21:00:00").toISOString(),
+    capacity: 200,
+    ticketLink: "/ticket/checkout",
+    purchaseVia: "internal",
+  },
 ];
 
 export default shows;

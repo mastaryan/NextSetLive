@@ -1,53 +1,43 @@
-import React, { useMemo, useState } from "react";
-import venues from "../data/venues";
+import React from "react";
 import { Link } from "react-router-dom";
-import Stars from "../components/Stars";
+import venues from "../data/venues";
 
-export default function VenueDirectory(){
-  const [filter, setFilter] = useState("");
-
-  const list = useMemo(()=>{
-    const v = filter.trim().toLowerCase();
-    return v ? venues.filter(x => x.state.toLowerCase().includes(v)) : venues;
-  },[filter]);
-
+export default function VenueDirectory() {
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-extrabold text-purple-400 mb-3">Venues</h1>
-
-      <div style={{display:'flex',alignItems:'center',gap:10}}>
-        <label className="text-sm text-muted">Filter by state:</label>
-        <input
-          value={filter}
-          onChange={e=>setFilter(e.target.value)}
-          placeholder="e.g., KY"
-          style={{width:100}}
-        />
-      </div>
-
-      <div className="grid-cards mt-5">
-        {list.map(v => (
-          <div key={v.id} className="card">
-            <div style={{display:'flex',justifyContent:'space-between',alignItems:'start', gap:10}}>
-              <h3 className="text-green-400 text-xl font-extrabold">
-                <Link to={`/venue/${v.id}`}>{v.name}</Link>
-              </h3>
-              {v.verified && <span className="badge-verified">Verified</span>}
+      <h1 className="text-3xl font-bold mb-6 text-green-400">Venues</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {venues.map((venue) => (
+          <Link
+            key={venue.id}
+            to={`/venue/${venue.id}`}
+            className="block border border-gray-700 rounded-lg p-4 bg-gray-900 hover:shadow-lg hover:border-green-400 transition"
+          >
+            <h2 className="text-xl font-semibold text-purple-400 mb-2 flex items-center gap-2">
+              {venue.name}
+              {venue.verified && (
+                <span className="text-green-400 text-sm font-bold">✅ Verified</span>
+              )}
+            </h2>
+            <p className="text-sm text-gray-400">{venue.city}, {venue.state}</p>
+            <p className="text-sm text-gray-500 mt-1">Capacity: {venue.capacity}</p>
+            <p className="text-sm text-gray-500">Booking: {venue.bookingEmail}</p>
+            {venue.facebook && (
+              <p className="text-sm text-blue-400">
+                <a href={venue.facebook} target="_blank" rel="noreferrer">
+                  Facebook Page
+                </a>
+              </p>
+            )}
+            <div className="mt-2">
+              <span className="text-yellow-400">
+                {"★".repeat(venue.rating || 0)}
+              </span>
+              <span className="text-gray-500">
+                {"★".repeat(5 - (venue.rating || 0))}
+              </span>
             </div>
-
-            <div className="text-muted" style={{marginTop:6}}>
-              {v.city}, {v.state}
-            </div>
-
-            {/* Keep cards same height by splitting fields onto their own lines */}
-            <div className="hr"></div>
-            <div>Capacity: <span className="text-muted">{v.capacity}</span></div>
-            <div>Email: <span className="text-muted">{v.email || "—"}</span></div>
-            <div>Facebook: {v.facebook ? <a href={v.facebook} target="_blank" rel="noreferrer" className="text-blue-300 underline">link</a> : <span className="text-muted">—</span>}</div>
-
-            <div className="hr"></div>
-            <Stars value={v.rating || 0} />
-          </div>
+          </Link>
         ))}
       </div>
     </div>
